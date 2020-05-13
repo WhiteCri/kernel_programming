@@ -1,0 +1,2 @@
+/home/kp/kp/hw3/lab2_one_thread.ko
+/home/kp/kp/hw3/lab2_one_thread.o

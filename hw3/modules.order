@@ -1,0 +1,6 @@
+kernel//home/kp/kp/hw3/lab1_tasklet.ko
+kernel//home/kp/kp/hw3/lab1_workqueue_shared.ko
+kernel//home/kp/kp/hw3/lab1_interrupt.ko
+kernel//home/kp/kp/hw3/lab2_one_tasklet.ko
+kernel//home/kp/kp/hw3/lab2_one_workqueue.ko
+kernel//home/kp/kp/hw3/lab2_one_thread.ko
