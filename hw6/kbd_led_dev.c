@@ -19,12 +19,26 @@ int KBD_LED_MAJOR = 0;
 int FLASH_TIME = HZ;
 static void led_flash(unsigned long dummy);
 static struct timer_list led_timer = TIMER_INITIALIZER(&led_flash, 0, 0);
+//add timer with call_back, expires, data
 static int led_state = 0;
 static int is_flash = 0;
+/* tw variables */
+static char kbuf[2];
+
+/* tw variables and */
 
 static void led_flash(unsigned long dummy)
 {
-	//Implement here
+	if (0 == is_flash) return;
+	pr_info("Flash!\n");
+	led_state = !led_state;
+	
+	if (led_state)
+		( kbd_drv->ops->ioctl ) (vc_cons[fg_console].d->port.tty, KDSETLED,LED_CAPS_LOCK);
+	else	
+		( kbd_drv->ops->ioctl ) (vc_cons[fg_console].d->port.tty, KDSETLED,LED_RESTORE); 
+
+	mod_timer(&led_timer, FLASH_TIME + jiffies);
 }
 
 int kbd_led_open(struct inode *inodep, struct file *filp)
@@ -38,28 +52,49 @@ int kbd_led_open(struct inode *inodep, struct file *filp)
 int kbd_led_release(struct inode *inodep, struct file *filp)
 {
 	( kbd_drv->ops->ioctl ) (vc_cons[fg_console].d->port.tty, KDSETLED,LED_RESTORE); 
+	is_flash = 0;
+	pr_info("release...\n");
 	return 0;
 }
 
 static int kbd_led_write(struct file *file, const char *buf, size_t count, loff_t *ppos)
 {
-	int i = 0;
-		
 	printk("<0> called kbd_led_write\n\n");
 	
 	if( (buf==NULL) || (count<0) )
 		return -EINVAL;
 
-	printk("<0> The User's buf : %s\n\n", buf);
+	//copy from user
+	copy_from_user(kbuf, buf, count);
+
+	printk("<0> The User's buf : %s\n\n", kbuf);
 			
-	switch(buf[i]) // Implement here
+	switch(kbuf[0]) // Implement here
 	{
 		case '0': // LED OFF
+			( kbd_drv->ops->ioctl ) (vc_cons[fg_console].d->port.tty, KDSETLED,LED_RESTORE);
+			is_flash = 0;
+			led_state = 0;
+			pr_info("led off....\n");
+		break; 
 		case '1': // LED ON
+			( kbd_drv->ops->ioctl ) (vc_cons[fg_console].d->port.tty, KDSETLED,LED_CAPS_LOCK);
+			pr_info("led on....\n");
+			is_flash = 0;
+			led_state = 1;
+			break; 
 		case 'f': // LED BLINK
 		case 'F':
+			is_flash = 20160371;
+			FLASH_TIME = HZ;
+			led_flash(20160371);
+			break;
 		case '+': // LED BLINK DELAY PLUS
+			FLASH_TIME *= 2; 
+			break;
 		case '-': // LED BLINK DELAY MINUS
+			FLASH_TIME = (FLASH_TIME/2) > HZ ? FLASH_TIME/2 : HZ;
+			break;
 		default :
 			printk("<0> Usage is Error\n");
 			return -EINVAL;
