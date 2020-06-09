@@ -56,9 +56,9 @@ mycdrv_write(struct file *file, const char __user * buf, size_t lbuf,
 	pr_info(" my current task pid is %d\n", (int)current->pid);
 	init_timer(&my_timer);	/* intialize */
 	my_timer.function = my_timer_function;
-	my_timer.expires = jiffies + HZ;	/* one second delay */
+	my_timer.expires = jiffies + 2*HZ;	/* one second delay */
 	my_timer.data = len;
-	add_timer(&my_timer);
+	add_timer(&my_timer); // just register function
 	pr_info("Adding timer at jiffies = %ld\n", jiffies);
 	len += 100;
 	return mycdrv_generic_write(file, buf, lbuf, ppos);

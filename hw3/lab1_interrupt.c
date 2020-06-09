@@ -58,7 +58,7 @@ static int __init my_init(void)
 
 static void __exit my_exit(void)
 {
-	synchronize_irq(irq);
+	synchronize_irq(irq);//wait for any pending interrupts on other cpus
 	free_irq(irq, &my_dev_id);
 	pr_info("Successfully unloading,  irq_counter = %d\n", irq_counter);
 }

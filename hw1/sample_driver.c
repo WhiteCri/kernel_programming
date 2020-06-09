@@ -52,7 +52,7 @@ static int mycdrv_release (struct inode *inode, struct file *file)
 static ssize_t
 mycdrv_read (struct file *file, char __user * buf, size_t lbuf, loff_t * ppos)
 {
-    int nbytes = lbuf - copy_to_user (buf, kbuf + *ppos, lbuf);
+    int nbytes = lbuf - copy_to_user (buf, kbuf + *ppos, lbuf); // return size of failed bytes
     *ppos += nbytes;
     printk (KERN_INFO "\n READING function, nbytes=%d, pos=%d\n", nbytes,
             (int)*ppos);
@@ -77,12 +77,13 @@ static const struct file_operations mycdrv_fops = {
 };
 static int __init my_init (void)
 {
-    kbuf = kmalloc (KBUF_SIZE, GFP_KERNEL);
-    first = MKDEV (my_major, my_minor);
-    register_chrdev_region (first, count, MYDEV_NAME);
-    my_cdev = cdev_alloc ();
-    cdev_init (my_cdev, &mycdrv_fops);
-    cdev_add (my_cdev, first, count);
+    kbuf = kmalloc (KBUF_SIZE, GFP_KERNEL);//memory
+    first = MKDEV (my_major, my_minor); // udev
+    register_chrdev_region (first, count, MYDEV_NAME); // register numbers
+	//count : number of consecutive devices needed
+    my_cdev = cdev_alloc (); // alloc cdev memory
+    cdev_init (my_cdev, &mycdrv_fops); //init
+    cdev_add (my_cdev, first, count); //add to cdev_map
     printk (KERN_INFO "\nSucceeded in registering character device %s\n",
             MYDEV_NAME);
     return 0;

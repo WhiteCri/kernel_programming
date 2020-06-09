@@ -1,0 +1,3 @@
+kernel//home/kp/kp/hw2/lab1_timer.ko
+kernel//home/kp/kp/hw2/lab2_multitimer.ko
+kernel//home/kp/kp/hw2/lab3_periodic_timer.ko

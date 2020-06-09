@@ -1,1 +1,3 @@
-kernel//home/kp/kp/hw5/lab3_ioctl_signal.ko
+kernel//home/kp/kp/ioctl/lab3_ioctl_signal.ko
+kernel//home/kp/kp/ioctl/lab1_ioctl_data.ko
+kernel//home/kp/kp/ioctl/lab2_ioctl_vardata.ko

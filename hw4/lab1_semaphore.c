@@ -64,7 +64,7 @@
 #endif
 #include "lab_char.h"
 
-static DEFINE_SEMAPHORE (my_sem);//default value is 1->read() can be called once
+//static DEFINE_SEMAPHORE (my_sem);//default value is 1->read() can be called once
 
 static ssize_t
 mycdrv_read (struct file *file, char __user * buf, size_t lbuf, loff_t * ppos)

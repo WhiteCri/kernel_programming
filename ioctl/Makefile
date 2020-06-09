@@ -1,4 +1,7 @@
 obj-m +=lab3_ioctl_signal.o
+obj-m +=lab1_ioctl_data.o
+obj-m +=lab2_ioctl_vardata.o
+
 
 KDIR:=/lib/modules/$(shell uname -r)/build
 PWD:=$(shell pwd)

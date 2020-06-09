@@ -73,6 +73,7 @@ mycdrv_read (struct file *file, char __user * buf, size_t lbuf, loff_t * ppos)
             current->comm);
 	printk (KERN_INFO "[%ld] before down_interruptible() my_sem = %d\n",
 		jiffies, my_sem.count);   
+	pr_info("my_sem.data : %d", my_sem.count);
     if (down_interruptible (&my_sem)) {
         printk (KERN_INFO "[%ld] process %i woken up by a signal\n", 
 			jiffies, current->pid);

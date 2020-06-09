@@ -45,6 +45,9 @@ int main(int argc, char **argv)
 	rc = write(fd1, message, length);
 	printf("return code from write = %d on %d, message=%s\n", rc, fd1,
 	       message);
+	rc = write(fd1, message, length);
+	printf("return code from write = %d on %d, message=%s\n", rc, fd1,
+		message);
 
 	memset(message, 0, length);
 

@@ -1,4 +1,5 @@
 kernel//home/kp/kp/hw4/lab1_wait_event_many.ko
 kernel//home/kp/kp/hw4/lab1_wait_event_1.ko
 kernel//home/kp/kp/hw4/lab1_semaphore_additional.ko
+kernel//home/kp/kp/hw4/lab1_semaphore.ko
 kernel//home/kp/kp/hw4/lab2_killable.ko

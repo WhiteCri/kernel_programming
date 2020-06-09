@@ -60,6 +60,7 @@ int main(int argc, char *argv[])
 
 	/* send the IOCTL to set the PID */
 
+	printf("pid is : %d\n", pid);
 	rc = ioctl(fd, MYIOC_SETPID, pid);
 	printf("\n\n rc from ioctl setting pid is = %d \n\n", rc);
 
